@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Orchestra",
+    "slug": "smooth-orchestra-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "orchestra",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.smoothorchestra.mobile"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
