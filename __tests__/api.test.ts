@@ -1,8 +1,11 @@
 import { ApiError, configure, get, post, setOnUnauthorized } from '../lib/api';
 
+// eslint-disable-next-line no-var
+declare var global: typeof globalThis;
+
 describe('API client', () => {
   const mockFetch = jest.fn();
-  global.fetch = mockFetch;
+  global.fetch = mockFetch as typeof fetch;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -96,9 +99,10 @@ describe('API client', () => {
   test('wraps network errors as ApiError with status 0', async () => {
     mockFetch.mockRejectedValueOnce(new TypeError('Network request failed'));
 
-    const error = await get('/api/test').catch((e) => e);
-    expect(error).toBeInstanceOf(ApiError);
-    expect(error.status).toBe(0);
+    let caughtError: unknown;
+    await get('/api/test').catch((e: unknown) => { caughtError = e; });
+    expect(caughtError).toBeInstanceOf(ApiError);
+    expect((caughtError as ApiError).status).toBe(0);
   });
 
   test('throws error if get called before configure', async () => {
